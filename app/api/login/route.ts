@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 
 const SECRET = process.env.JWT_SECRET || "dev_secret";
 
-import axios from "axios";
-
 export async function POST(req: Request) {
     try {
         const { name, nis } = await req.json();
@@ -19,7 +17,7 @@ export async function POST(req: Request) {
         const token = jwt.sign({ name, nis }, SECRET, { expiresIn: "1m" });
         
         return NextResponse.json({ token });
-    } catch (err) {
+    } catch {
         return NextResponse.json(
         { error: "Invalid request or JSON format" },
         { status: 400 }
