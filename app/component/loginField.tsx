@@ -13,7 +13,6 @@ export default function LoginField() {
     const router = useRouter();
     const [name, setName] = useState('');
     const [nis, setNis] = useState('');
-    const [session, setSession] = useState<any>(null);
 
     function hasItems<T>(arr: T[]): boolean {
         return arr.length > 0;
@@ -35,7 +34,6 @@ export default function LoginField() {
         if (data.token) {
             sessionStorage.setItem('jwt', data.token);
             console.log(nis);
-            setSession({ name, nis });
 
             const config = {
                 'Content-Type': 'application/json',
@@ -109,7 +107,6 @@ export default function LoginField() {
         const exp = payload.exp * 1000;
 
         if (Date.now() < exp) {
-            setSession({ name: payload.name, nis: payload.nis });
         } else {
             sessionStorage.removeItem('jwt');
         }
@@ -129,7 +126,6 @@ export default function LoginField() {
                 <Button onClick={handleLogin} variant="outline" className="text-white bg-[#011F4B] hover:cursor-pointer">Masuk</Button>
                 <a className="decoration-0 text-blue-600 cursor-pointer" onClick={() => {
                     sessionStorage.removeItem('jwt');
-                    setSession(null);
                     alert('ok');
                 }}>Reset JWT</a>
             </div>
