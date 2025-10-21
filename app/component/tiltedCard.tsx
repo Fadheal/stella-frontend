@@ -28,8 +28,8 @@ export default function TiltedCard(props: cardProp) {
         ["-10deg", "10deg"]
     )
 
-    function handleMouseMove(e: any) {
-        const rect = e.target.getBoundingClientRect();
+    function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
 
         const width = rect.width;
         const height = rect.height;
