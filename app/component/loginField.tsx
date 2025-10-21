@@ -40,14 +40,14 @@ export default function LoginField() {
                 'Authorization': process.env.NEXT_PUBLIC_API_KEY,
             };
 
-            axios.get('http://localhost:8080/siswa/nis',{
+            axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/siswa/nis`,{
                 headers: config,
                 params: { nis: nis }
             })
             .then(response => {
                 console.log(name);
                 if (hasItems(response.data.data) && response.data.data[0].nama == name.toUpperCase()) {
-                    axios.get('http://localhost:8080/voter/nis',{
+                    axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/voter/nis`,{
                         headers: config,
                         params: { nis: nis }
                     })
@@ -55,20 +55,20 @@ export default function LoginField() {
                         if (!hasItems(response.data.data)) {
                             router.push('/pemilihan')
                         } else {
-                            alert('Login failed2');
+                            alert('Anda sudah melakukan voting');
                         }
                     })
                     .catch(err => {
                         console.log('Something went wrong : ', err)
                     })
                 } else {
-                    axios.get('http://localhost:8080/guru/nip', {
+                    axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/guru/nip`, {
                         headers: config,
                         params: { nip: nis }
                     })
                     .then(response => {
                         if (hasItems(response.data.data) && response.data.data[0].name == name.toUpperCase()) {
-                            axios.get('http://localhost:8080/voter/nip',{
+                            axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/voter/nip`,{
                                 headers: config,
                                 params: { nip: nis }
                             })
@@ -76,14 +76,14 @@ export default function LoginField() {
                                 if (!hasItems(response.data.data)) {
                                     router.push('/pemilihan')
                                 } else {
-                                    alert('Login failed2');
+                                    alert('Anda sudah melakukan voting');
                                 }
                             })
                             .catch(err => {
                                 console.log('Something went wrong : ', err)
                             })
                         } else {
-                            alert('Login failed1');
+                            alert('Gagal Login, Nama, Nis / Nip salah');
                         }
                     })
                     .catch(err => {

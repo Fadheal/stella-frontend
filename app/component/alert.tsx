@@ -39,7 +39,7 @@ export function AlertConfirmationDialog(props: alertProp) {
         console.log('requesting');
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/votes', selected, config)
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/votes`, selected, config)
             console.log('Form submited succesfully: ', response.data);
 
             const token = sessionStorage.getItem('jwt');
@@ -48,10 +48,10 @@ export function AlertConfirmationDialog(props: alertProp) {
             const jwtData = JSON.parse(atob(token.split('.')[1]));
 
             if (jwtData.nis.length > 15) {
-                const voterResponse = await axios.post('http://localhost:8080/voter/nip', { name: jwtData.name, nip: jwtData.nis }, config);
+                const voterResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/voter/nip`, { name: jwtData.name, nip: jwtData.nis }, config);
                 console.log('Form submitted succesfully: ', voterResponse.data);
             } else {
-                const voterResponse = await axios.post('http://localhost:8080/voter/nis', { name: jwtData.name, nis: jwtData.nis }, config);
+                const voterResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/voter/nis`, { name: jwtData.name, nis: jwtData.nis }, config);
                 console.log('Form submitted succesfully: ', voterResponse.data);
             }
 
