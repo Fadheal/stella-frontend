@@ -26,8 +26,6 @@ type alertProp = {
 export function AlertConfirmationDialog(props: alertProp) {
     const router = useRouter();
     const [selected, setSelected] = useState({ selected: props.paslon });
-    const [sessionData, setSessionData] = useState(null);
-    const [responseData, setResponseData] = useState(true);
 
     const config = {
       headers: {
@@ -36,13 +34,12 @@ export function AlertConfirmationDialog(props: alertProp) {
       },
     };
     
-    async function continueButtonHandler(e:any) {
+    async function continueButtonHandler(e: { preventDefault: () => void; }) {
         setSelected({ selected: props.paslon })
         console.log('requesting');
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/votes', selected, config)
-            setResponseData(response.data);
             console.log('Form submited succesfully: ', response.data);
 
             const token = sessionStorage.getItem('jwt');
@@ -52,11 +49,9 @@ export function AlertConfirmationDialog(props: alertProp) {
 
             if (jwtData.nis.length > 15) {
                 const voterResponse = await axios.post('http://localhost:8080/voter/nip', { name: jwtData.name, nip: jwtData.nis }, config);
-                setSessionData(voterResponse.data);
                 console.log('Form submitted succesfully: ', voterResponse.data);
             } else {
                 const voterResponse = await axios.post('http://localhost:8080/voter/nis', { name: jwtData.name, nis: jwtData.nis }, config);
-                setSessionData(voterResponse.data);
                 console.log('Form submitted succesfully: ', voterResponse.data);
             }
 
