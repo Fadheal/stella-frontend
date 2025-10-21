@@ -124,10 +124,6 @@ export default function LoginField() {
                     <Input type="text" id="nisOrNip" placeholder="0000/0000.063" className="h-12" defaultValue={nis} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNis(e.target.value)} />
                 </div>
                 <Button onClick={handleLogin} variant="outline" className="text-white bg-[#011F4B] hover:cursor-pointer">Masuk</Button>
-                <a className="decoration-0 text-blue-600 cursor-pointer" onClick={() => {
-                    sessionStorage.removeItem('jwt');
-                    alert('ok');
-                }}>Reset JWT</a>
             </div>
         </div>
     )
